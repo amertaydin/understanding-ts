@@ -1,5 +1,6 @@
-var userInput;
-var userName;
+"use strict";
+let userInput;
+let userName;
 userInput = 5;
 userInput = "Mert";
 // we need to know the type to assign unknown

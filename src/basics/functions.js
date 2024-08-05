@@ -1,3 +1,4 @@
+"use strict";
 function add(n1, n2) {
     return n1 + n2;
 }
@@ -11,10 +12,10 @@ printResult(add(5, 12));
 // combineValues = 5;
 // console.log(combineValues(1, 2));
 function addAndHandle(n1, n2, cb) {
-    var result = n1 + n2;
+    const result = n1 + n2;
     cb(result);
 }
-var combineValues;
+let combineValues;
 combineValues = add;
 // combineValues = printResult;
-addAndHandle(1, 6, function (result) { return console.log(result); });
+addAndHandle(1, 6, (result) => console.log(result));
