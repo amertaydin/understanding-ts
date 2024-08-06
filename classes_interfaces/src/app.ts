@@ -45,10 +45,18 @@ class AccountingDepartment extends Department {
 class FinanceDepartment extends Department {
   private lastReport: string;
   private reports: string[];
-  constructor(id: string, reports: string[]) {
+  private static instance: FinanceDepartment;
+
+  private constructor(id: string, reports: string[]) {
     super(id, "Finance");
     this.reports = reports;
     this.lastReport = reports[0];
+  }
+
+  static getInstance() {
+    if (this.instance) return this.instance;
+    this.instance = new FinanceDepartment("d3", []);
+    return this.instance;
   }
 
   describe(): void {
@@ -106,7 +114,10 @@ accounting.describe();
 accounting.printEmployeeInformation();
 console.log(accounting);
 
-const finance = new FinanceDepartment("d3", ["market", "btc"]);
+// const finance = new FinanceDepartment("d3", ["market", "btc"]);
+const finance = FinanceDepartment.getInstance();
+const finance1 = FinanceDepartment.getInstance();
+// They will be the same instances
 finance.addReport("food");
 console.log(finance.mostRecentReport);
 finance.mostRecentReport = "prices";

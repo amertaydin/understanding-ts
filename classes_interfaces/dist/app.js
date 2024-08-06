@@ -37,6 +37,12 @@ class FinanceDepartment extends Department {
         this.reports = reports;
         this.lastReport = reports[0];
     }
+    static getInstance() {
+        if (this.instance)
+            return this.instance;
+        this.instance = new FinanceDepartment("d3", []);
+        return this.instance;
+    }
     describe() {
         console.log(`Finance Department - ID ${this.id}`);
     }
@@ -77,7 +83,8 @@ accounting.addEmployee("Dwight");
 accounting.describe();
 accounting.printEmployeeInformation();
 console.log(accounting);
-const finance = new FinanceDepartment("d3", ["market", "btc"]);
+const finance = FinanceDepartment.getInstance();
+const finance1 = FinanceDepartment.getInstance();
 finance.addReport("food");
 console.log(finance.mostRecentReport);
 finance.mostRecentReport = "prices";
