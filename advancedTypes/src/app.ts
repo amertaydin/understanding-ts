@@ -123,3 +123,14 @@ const userInputElement = document.getElementById(
 )! as HTMLInputElement;
 
 userInputElement.value = "Hi there";
+
+// it gives us the flexibility of not knowing which properties we will get and how many
+interface ErrorContainer {
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: "Not a valid email", // this is okay
+  //   email: 1 this won't
+  username: "Must start with a capital character!",
+};
