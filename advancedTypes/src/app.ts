@@ -44,6 +44,22 @@ function add(a: Combinable, b: Combinable) {
   return a + b;
 }
 
+const fetchedUserData = {
+  id: "u1",
+  name: "Max",
+  // job: { title: "CEO", description: "My own company" },
+};
+
+const userInput = null;
+
+// ?? means null or undefined, use the fall back only null and undefined,
+// not on empty strings
+const storedDate = userInput ?? "Default";
+
+console.log(storedDate);
+
+// console.log(fetchedUserData?.job?.title); this is how we can do optional chaining
+
 type UnknownEmployee = Employee | Admin;
 
 function printEmployeeInformation(employee: UnknownEmployee) {

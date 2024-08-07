@@ -10,6 +10,13 @@ function add(a, b) {
     }
     return a + b;
 }
+const fetchedUserData = {
+    id: "u1",
+    name: "Max",
+};
+const userInput = null;
+const storedDate = userInput !== null && userInput !== void 0 ? userInput : "Default";
+console.log(storedDate);
 function printEmployeeInformation(employee) {
     console.log("Name: ", employee.name);
     if ("privileges" in employee)
