@@ -1,128 +1,54 @@
-abstract class Department {
-  static fiscalYear = 2024;
-  // private readonly id : string;
-  // public name: string;
-  protected employees: string[] = [];
-
-  constructor(protected readonly id: string, public name: string) {
-    // this.id = id;
-    // this.name = name;
-  }
-
-  // No implementation since it's abstract
-  abstract describe(): void;
-
-  static createEmployee(name: string) {
-    return { name: name };
-  }
-
-  addEmployee(employee: string) {
-    this.employees.push(employee);
-  }
-
-  printEmployeeInformation() {
-    console.log(this.employees.length);
-    console.log(this.employees);
-  }
+// type AddFn = (a: number, b: number) => number;
+interface AddFn {
+  (a: number, b: number): number;
 }
 
-class SoftwareDepartment extends Department {
-  describe(): void {
-    console.log(`Software Department - ID ${this.id}`);
-  }
+let add: AddFn;
+
+add = (n1: number, n2: number) => {
+  return n1 + n2;
+};
+
+interface Aged {
+  readonly age?: number;
+  outputAged?: number; // Optional parameter
 }
 
-class AccountingDepartment extends Department {
-  constructor(id: string, public admins: string[]) {
-    super(id, "Accounting");
-  }
+interface Greetable extends Aged {
+  name: string;
 
-  describe(): void {
-    console.log(`Accounting Department - ID ${this.id}`);
-  }
+  greet(phrase: string): void;
 }
 
-class FinanceDepartment extends Department {
-  private lastReport: string;
-  private reports: string[];
-  private static instance: FinanceDepartment;
+class Person implements Greetable {
+  name: string;
+  age?: number;
 
-  private constructor(id: string, reports: string[]) {
-    super(id, "Finance");
-    this.reports = reports;
-    this.lastReport = reports[0];
-  }
-
-  static getInstance() {
-    if (this.instance) return this.instance;
-    this.instance = new FinanceDepartment("d3", []);
-    return this.instance;
-  }
-
-  describe(): void {
-    console.log(`Finance Department - ID ${this.id}`);
-  }
-
-  // Overriding the addEmployee method in base class
-  addEmployee(employee: string): void {
-    if (employee == "Frank") {
-      return;
+  constructor(n: string, age?: number) {
+    this.name = n;
+    if (age) {
+      this.age = age;
     }
-    this.employees.push(employee);
   }
 
-  addReport(report: string) {
-    this.reports.push(report);
-    this.lastReport = report;
-  }
-
-  // getter
-  get mostRecentReport(): string {
-    if (this.lastReport) return this.lastReport;
-    throw new Error("No report found");
-  }
-
-  // settter
-  set mostRecentReport(report: string) {
-    if (!report) {
-      throw new Error("Please provide a valid value");
-    }
-    this.addReport(report);
+  greet(phrase: string) {
+    console.log(phrase + " " + this.name);
   }
 }
 
-const employee1 = Department.createEmployee("Nicole");
-console.log(employee1, Department.fiscalYear);
+let user1: Greetable;
+let user2: Greetable;
 
-const software = new SoftwareDepartment("d1", "Software");
-software.addEmployee("Mert");
-software.addEmployee("Batur");
-software.addEmployee("Ali");
-// software.employees[3] = "Neal"; we make it private to not modify it like that
-software.describe();
-software.printEmployeeInformation();
+// user1 = {
+//   name: "General Kenobi",
+//   greet(phrase: string) {
+//     console.log(phrase + " " + this.name);
+//   },
+// };
 
-// Since this doesn't have name propert it will print undefined
-// const softwareCopy1 = { describe: software.describe };
-// softwareCopy1.describe();
+user1 = new Person("General Kenobi", 100);
+user2 = new Person("Obi-wan");
 
-const accounting = new AccountingDepartment("d2", ["Jenny", "John"]);
-accounting.addEmployee("Lebron");
-accounting.addEmployee("Kobe");
-accounting.addEmployee("Dwight");
-accounting.describe();
-accounting.printEmployeeInformation();
-console.log(accounting);
-
-// const finance = new FinanceDepartment("d3", ["market", "btc"]);
-const finance = FinanceDepartment.getInstance();
-const finance1 = FinanceDepartment.getInstance();
-// They will be the same instances
-finance.addReport("food");
-console.log(finance.mostRecentReport);
-finance.mostRecentReport = "prices";
-console.log(finance.mostRecentReport);
-finance.addEmployee("Kimiko");
-finance.addEmployee("Frank");
-finance.describe();
-console.log(finance);
+user1.greet("Hello There!");
+// user1.age = 6; this will result an error
+console.log(user1);
